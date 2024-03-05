@@ -30,15 +30,16 @@ const path = require("path")
  * lecture-2 to 16 at the main folder level
  * fs.mkdirSync 
  * **/
-const fs = require("fs");
-const directoryPath = path.dirname(__dirname);
+// const fs = require("fs");
+// console.log("dirname",__dirname)
+// const directoryPath = path.dirname(__dirname);
+// console.log(directoryPath);
 
-for (let idx = 2; idx <= 16; idx++) {
-
-    let pathtOfNewDir = path.join(directoryPath, `lecture_${idx}`);
-    fs.mkdirSync(pathtOfNewDir);
-    console.log(pathtOfNewDir+ "is created");
-}
+// for (let idx = 2; idx <= 16; idx++) {
+//     let pathtOfNewDir = path.join(directoryPath, `lecture_${idx}`);
+//     fs.mkdirSync(pathtOfNewDir);
+//     console.log(pathtOfNewDir+ "is created");
+// }
 
 
 
