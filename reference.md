@@ -1,5 +1,5 @@
 # Refernces
-
+List of all the browser API : https://developer.mozilla.org/en-US/docs/Web/API
 
 ## Lecture-1
 ### Installation 
