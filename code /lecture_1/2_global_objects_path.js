@@ -22,6 +22,8 @@ const path = require("path")
 // const fileName=path.basename(__filename);
 // const directoryName=path.dirname(__dirname);
 
+
+
 // console.log("fileExt:   ",fileExt);
 // console.log("fileName:   ", fileName);
 // console.log("directoryName:   ", directoryName);
