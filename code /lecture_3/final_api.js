@@ -81,13 +81,13 @@ app.post("/api/user", function (req, res) {
         })
     }
 })
-app.get("/myroute", function (req, res) {
-    res.status(200).json({
-        message: "returning the resp"
-    })
-})
+// app.get("/myroute", function (req, res) {
+//     res.status(200).json({
+//         message: "returning the resp"
+//     })
+// })
 /*********getUserById******/
-// template route 
+// template route  -> dynamic
 app.get("/api/user/:id/", function (req, res) {
     try {
         const id = req.params.id;
@@ -140,7 +140,7 @@ function getUserId(id) {
  * **/
 
 // /listen to the server
-const PORT=process.env.PORT||3000
+const PORT = process.env.PORT || 3000
 app.listen(PORT, function () {
     console.log("server is running at port 3000");
 })
