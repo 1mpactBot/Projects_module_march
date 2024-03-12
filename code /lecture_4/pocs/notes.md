@@ -42,7 +42,4 @@ always add versoning to your API
 
 
 
-## MVC architecture
-
-
 
