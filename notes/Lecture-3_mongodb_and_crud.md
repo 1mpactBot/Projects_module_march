@@ -135,7 +135,6 @@ card_type: cue_card
 
 - **Express and MongoDB:** <br> Express handles the incoming HTTP requests and responses. It interfaces with MongoDB to perform operations like reading, writing, updating, and deleting data from the database.
     
-
 ## Steps to get DB Link from Mongodb Atlas
 * Signup to mongodb.com 
 ![Pasted image 20231123171056](https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/057/784/original/upload_86111677dfec257e36b4bcc2a93fcfba.png?1700828387)
