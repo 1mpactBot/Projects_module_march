@@ -12,11 +12,17 @@ mongoose.connect(dbURL)
         // console.log(connection);
         console.log("connected to DB")
     }).catch(err => { console.log(err) });
+    //********************** */ 
+
+
+
+
 
 // create a server
 const app = express();
 // any request has something in it's body -> add it to req.body
 app.use(express.json());
+
 const appRouter = express.Router();
 const ProductRouter=require("./router/ProductRouter");
 app.use("/api/v1", appRouter);
@@ -33,11 +39,3 @@ const PORT = process.env.PORT || LOCAL_PORT;
 app.listen(PORT, function () {
     console.log("server is running at port 3000");
 })
-/****
- * it is cross platform -> web -> new html
- * android -> rarely update there app -> api -> 
- * */ 
-
-
-
- 
