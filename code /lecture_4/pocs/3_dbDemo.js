@@ -190,7 +190,7 @@ productRouter.route("/:id")
     .patch(updateProductById);
 
 /*****create user***/
-userRouter.post( createUser).get(getAllUser);
+userRouter.post(createUser).get(getAllUser);
 
 /*********************************/
 const PORT = process.env.PORT || LOCAL_PORT;
