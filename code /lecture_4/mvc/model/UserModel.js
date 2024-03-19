@@ -13,6 +13,7 @@
 /**
  * rules that an entity should follow
  * **/
+
 const mongoose = require("mongoose");
 /***
  * amazon

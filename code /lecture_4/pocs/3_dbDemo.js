@@ -126,10 +126,8 @@ async function updateProductById(req, res) {
         })
     }
 }
-
-
 /****user***/
-/*****hanlder*/
+/*****handler*/
 // hanlder method
 async function createUser(req, res) {
     try {
@@ -167,7 +165,6 @@ async function getAllUser(req, res) {
         })
     }
 }
-
 //api/v1/product/:id  , PATCH
 const appRouter = express.Router();
 const productRouter = express.Router();
@@ -200,9 +197,6 @@ const PORT = process.env.PORT || LOCAL_PORT;
 app.listen(PORT, function () {
     console.log("server is running at port 3000");
 })
-
-
-
 /****
  * it is cross platform -> web -> new html
  * android -> rarely update there app -> api -> 

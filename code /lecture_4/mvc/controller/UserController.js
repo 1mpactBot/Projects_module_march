@@ -1,7 +1,6 @@
 const UserModel = require("../model/UserModel");
-
 /****user***/
-/*****hanlder*/
+/*****hadler*/
 // hanlder method
 async function createUser(req, res) {
     try {

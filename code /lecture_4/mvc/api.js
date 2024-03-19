@@ -24,15 +24,6 @@ app.use("/api/v1", appRouter);
 /****post request -> /product**/
 appRouter.use("/product", ProductRouter);
 
-
-
-
-
-
-
-
-
-
 const userRouter = express.Router();
 appRouter.use("/user", userRouter);
 
@@ -46,3 +37,7 @@ app.listen(PORT, function () {
  * it is cross platform -> web -> new html
  * android -> rarely update there app -> api -> 
  * */ 
+
+
+
+ 
