@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const mongoose = require("mongoose");
+const cors = require("cors");
 // it adds all the enviornment variables to processe.env
 dotenv.config({ path: path.join(__dirname,".env") });
 /**********************connect with your DB***********************/
@@ -21,6 +22,14 @@ const { createResourceFactory, getAllResourceFactory, getResourceByIdFactory, de
 
 // create a server
 const app = express();
+const corsConfig = {
+    origin: true,
+    credentials: true,
+};
+// this is allowing all the requests
+app.use(cors(corsConfig));
+app.options('*', cors(corsConfig));
+
 // any request has something in it's body -> add it to req.body
 app.use(express.json());
 

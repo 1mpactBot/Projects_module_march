@@ -24,7 +24,7 @@ const getAllResourceFactory = (model) => {
             const queryObject = req.query;
             let sort = queryObject.sort;
             let page = queryObject.page || 1;
-            let limit = queryObject.limit || 2;
+            let limit = queryObject.limit || 20;
             /****
              * 1. sort -> parameter normally -> asc , - -> desc  
              * 2. limit -> number of elements

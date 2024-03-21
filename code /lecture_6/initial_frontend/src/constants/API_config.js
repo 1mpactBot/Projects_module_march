@@ -1,0 +1,6 @@
+const BASE_URL = 'http://localhost:3001';
+const API_VERSION = "/api/v1"
+const URL_CONFIG = {
+    PRODUCTS_ROUTE: BASE_URL + API_VERSION + "/product"
+}
+export default URL_CONFIG;

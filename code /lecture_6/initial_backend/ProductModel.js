@@ -15,7 +15,7 @@
  * **/
 const mongoose = require("mongoose");
 const productSchemaRules = {
-    name: {
+    title: {
         type: String,
         required: true,
     },
@@ -30,6 +30,7 @@ const productSchemaRules = {
     },
     discount: {
         type: Number,
+        default:0,
         validate: function () {
             return this.price > this.discount;
         }
@@ -38,6 +39,10 @@ const productSchemaRules = {
     category: {
         type: String,
         required: true
+    },
+    image:{
+        type:String,
+        default:"https://picsum.photos/200/300"
     }
 }
 // checking for valid category
