@@ -38,7 +38,7 @@ function Home() {
                     ...product,
                     id: product["_id"],
                     images: product.image,
-                    title: product.name
+                    title: product.name||product.title
                 }
             })
             setProducts(productMappedArr);

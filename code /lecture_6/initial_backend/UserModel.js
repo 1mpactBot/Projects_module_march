@@ -52,7 +52,6 @@ userSchema.pre("save", function (next) {
     this.confirmPassword = undefined;
     next();
 })
-
 // not send password to frontend 
 userSchema.pre("findOne", function (next) {
     // filter
@@ -60,7 +59,6 @@ userSchema.pre("findOne", function (next) {
     this.select("-__v");
     next();
 });
-
 // dynamic list of roles 
 let roles = ["admin", "user", "vendor", "buyers"];
 userSchema.pre("save", function (next) {
@@ -71,6 +69,17 @@ userSchema.pre("save", function (next) {
         next("role is not defined");
     }
 });
+// to add some customization over error poropogation
+userSchema.post("save",function(err,doc,next){
+    console.log("error is ",err);
+    if(err.code === 11000){
+        next("Email is already taken");
+    }
+    else{
+        // if error is not for unique index
+        next(err);
+    }
+})
 const UserModel = new mongoose.model("UserModel", userSchema);
 // place where all the users will go while following the schems
 module.exports = UserModel;
