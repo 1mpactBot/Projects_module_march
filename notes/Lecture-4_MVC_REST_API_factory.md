@@ -9,7 +9,7 @@
 	* Creating routes
 	* Creating controllers
 	* Chaining handlers
-code for the lecture : [link](https://github.com/Jasbir96/Full_stack_may_2023/tree/master/Projects_Module/code/Lecture_3_Rest_MVC)
+
 
 
 ## User Model

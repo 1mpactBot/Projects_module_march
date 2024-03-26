@@ -6,7 +6,7 @@
 - MongoDB operators   
 - Filtering of data
 -  Alias routes like top 5 products
-code for the lecture : [link](https://github.com/Jasbir96/Full_stack_may_2023/tree/master/Projects_Module/code/Lec_5_aliasing_queryParams)
+
 
 
 ## real world use case of pagination searching and sorting

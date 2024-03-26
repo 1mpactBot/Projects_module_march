@@ -6,7 +6,7 @@
 * Signup 
 * Login 
 * Protect route 
-code for the lecture : [link](https://github.com/Jasbir96/Full_stack_may_2023/tree/master/Projects_Module/code/Lec_6_cookies_jwt_auth)
+
 
 
 ## cookies and it's usecase 

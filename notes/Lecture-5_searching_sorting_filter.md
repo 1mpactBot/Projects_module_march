@@ -6,7 +6,7 @@
 * pre and post hook in Mongoose 
 - Query params in Express
 - select ,sort  -> Products
-code for the lecture : [link](https://github.com/Jasbir96/Full_stack_may_2023/tree/master/Projects_Module/code/Lecture_4_Mongodb_queries_searching_sorting_pagination)
+
 
 
 ##  Common Error in express 
