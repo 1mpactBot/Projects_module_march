@@ -7,11 +7,14 @@ const mongoose = require("mongoose");
 // including env variables
 dotenv.config();
 
+
+
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const promisify = require("util").promisify;
 const promisifiedJWTSign = promisify(jwt.sign);
 const promisifiedJWTVerify = promisify(jwt.verify);
+
 
 /**********************connection to our DB********************************/
 
@@ -32,6 +35,8 @@ const app = express();
 app.use(express.json());
 /*******to get the cookie in req.cookies**/
 app.use(cookieParser());
+
+
 
 const signupController = async function (req, res) {
     try {
