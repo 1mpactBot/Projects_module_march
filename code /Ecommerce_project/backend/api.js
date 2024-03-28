@@ -15,9 +15,6 @@ mongoose.connect(dbURL)
     //********************** */ 
 
 
-
-
-
 // create a server
 const app = express();
 // any request has something in it's body -> add it to req.body
