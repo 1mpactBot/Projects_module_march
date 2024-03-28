@@ -12,7 +12,7 @@ mongoose.connect(dbURL)
         // console.log(connection);
         console.log("connected to DB")
     }).catch(err => { console.log(err) });
-    //********************** */ 
+//********************** */ 
 
 
 // create a server
@@ -21,14 +21,27 @@ const app = express();
 app.use(express.json());
 
 const appRouter = express.Router();
-const ProductRouter=require("./router/ProductRouter");
 app.use("/api/v1", appRouter);
 
 /****post request -> /product**/
+const ProductRouter = require("./router/ProductRouter");
 appRouter.use("/product", ProductRouter);
 
-const userRouter = express.Router();
-appRouter.use("/user", userRouter);
+const UserRouter = require("./router/UserRouter");
+appRouter.use("/user", UserRouter);
+
+const AuthRouter = require("./router/AuthRouter");
+appRouter.use("/auth", AuthRouter);
+
+
+/************routes***************/
+// signup -> create a user
+
+
+/***
+ * should only be allowed to be accessed by admin
+ * 
+ * **/
 
 /*************product*********/
 /*********************************/

@@ -1,76 +1,11 @@
-
-const express = require("express");
-
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
-
-// including env variables
-dotenv.config();
+const EmailHelper = require("../utils/emailSender");
+const UserModel = require("../model/UserModel");
 const { JWT_SECRET } = process.env;
-
-
-
-const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const promisify = require("util").promisify;
 
 const promisifiedJWTSign = promisify(jwt.sign);
 const promisifiedJWTVerify = promisify(jwt.verify);
-
-
-/**********************connection to our DB********************************/
-
-const { DB_PASSWORD, DB_USER, LOCAL_PORT } = process.env;
-// connection with the DB
-const dbURL =
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.drcvhxp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-mongoose.connect(dbURL)
-    .then(function (connection) {
-        // console.log(connection);
-        console.log("connected to DB")
-    }).catch(err => { console.log(err) });
-const UserModel = require("./model/UserModel");
-const EmailHelper = require("./emailSender");
-
-/*************************************************/
-const app = express();
-/***to get the data in req.body **/
-app.use(express.json());
-/*******to get the cookie in req.cookies**/
-app.use(cookieParser());
-
-
-const getUserData = async function (req, res) {
-    try {
-        const id = req.userId;
-        const user = await UserModel.findById(id);
-        res.status(200).json({
-            "message": "user data retrieved  successfully",
-            user: user
-        })
-    } catch (err) {
-        res.status(500).json({
-            message: err.message
-        })
-    }
-}
-const getAllUsers = async function (req, res) {
-    try {
-        // -> if you don't pass anything -> return you the whole collection
-        // -> if want to filter -> parameter -> an object
-        const listOfUser = await UserModel.find();
-        res.status(200).json({
-            status: "successfull",
-            message: `list of the product `,
-            UserList: listOfUser
-        })
-    } catch (err) {
-        res.status(404).json({
-            status: "failure",
-            message: err.message
-        })
-    }
-}
 
 const signupController = async function (req, res) {
     try {
@@ -336,39 +271,12 @@ const isAdminMiddleWare = async function (req, res, next) {
         })
     }
 }
-/************routes***************/
-// signup -> create a user
-app.post("/signup", signupController);
-app.post("/login", loginController);
-app.get("/allowIfLoggedIn", protectRouteMiddleWare, getUserData);
-app.patch("/forgetPassword", forgetPasswordController);
-app.patch("/resetPassword/:id", resetPasswordController);
 
-/***
- * should only be allowed to be accessed by admin
- * 
- * **/
-app.get("/allowOnlyAdmin", protectRouteMiddleWare, isAdminMiddleWare, getAllUsers);
-
-
-/******************handler functions ***************/
-// 404 route not found
-app.use(function cb(req, res) {
-    // console.log("");
-    // response 
-    res.status(404).json({
-        status: "failure",
-        message: " route not found"
-    })
-})
-// server -> run on a port 
-app.listen(LOCAL_PORT, function () {
-    console.log(` server is listening to port ${LOCAL_PORT}`);
-})
-
-/***
- * 1. payload -> normal data
- * 2. secret -> secret key
- * 3. algorithm -> HS256(optional)
- * 
- * **/ 
+module.exports = {
+    signupController,
+    loginController,
+    forgetPasswordController,
+    resetPasswordController,
+    protectRouteMiddleWare,
+    isAdminMiddleWare
+}
