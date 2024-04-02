@@ -32,6 +32,11 @@ appRouter.use("/user", UserRouter);
 
 const AuthRouter = require("./router/AuthRouter");
 appRouter.use("/auth", AuthRouter);
+const BookingRouter = require("./router/BookingRouter");
+
+appRouter.use("/booking", BookingRouter);
+
+
 
 
 /************routes***************/
