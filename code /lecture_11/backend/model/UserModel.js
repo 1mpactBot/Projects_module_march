@@ -48,6 +48,11 @@ const userSchemaRules = {
     otpExpiry: {
         type: Date
     },
+    bookings: {
+        // type of array of objectIds
+        type: [mongoose.Schema.ObjectId],
+        ref: "bookingModel"
+    },
 }
 const userSchema = new mongoose.Schema(userSchemaRules);
 userSchema.pre("save", function (next) {

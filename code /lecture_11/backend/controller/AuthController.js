@@ -168,7 +168,7 @@ const resetPasswordController = async function (req, res, next) {
         let resetDetails = req.body;
         // checking for all the inputs
         if (!resetDetails.password == true || !resetDetails.otp == true || !resetDetails.confirmPassword == true) {
-         return   res.status(401).json({
+            return res.status(401).json({
                 status: "failure",
                 message: "invalid request"
             })
@@ -245,6 +245,7 @@ const protectRouteMiddleWare = async function (req, res, next) {
             next();
         }
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             message: err.message,
             status: "failure"

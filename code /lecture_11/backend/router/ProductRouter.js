@@ -7,7 +7,7 @@ const { createProduct,
 const { isAdminMiddleWare } = require("../controller/AuthController");
 const ProductRouter = express.Router();
 /****create product**/
-ProductRouter
+ProductRouter.route("/")
     .post(createProduct)
     .get(isAdminMiddleWare,getAllProducts);
 /*****get a product by it's ****/

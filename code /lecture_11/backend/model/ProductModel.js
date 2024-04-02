@@ -35,7 +35,15 @@ const productSchemaRules = {
             return this.price > this.discount;
         }
     },
-    brand: String
+    brand: String,
+    reviews: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "ReviewModel"
+    },
+    catgories: {
+        type: [String],
+        required: true
+    }
 }
 const productSchema = new mongoose.Schema(productSchemaRules);
 const catgories = [
@@ -44,9 +52,9 @@ const catgories = [
     "men's clothing",
     "women's clothing"
 ];
-
 productSchema.pre("save", function (next) {
-    let isPresent = catgories.find((cCategory) => { return cCategory == this.category })
+    console.log("hello", this);
+    let isPresent = catgories.find((cCategory) => { return this.catgories.includes(cCategory) })
     if (isPresent == undefined) {
         const error = new Error("category is invalid");
         return next(error);

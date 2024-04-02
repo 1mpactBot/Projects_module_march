@@ -1,16 +1,15 @@
 const express = require("express");
 const { protectRouteMiddleWare } = require("../controller/AuthController");
-const UserModel = require("../model/UserModel");
+
 const ProductModel = require("../model/ProductModel");
 const BookingModel = require("../model/BookingModel");
 const BookingRouter = express.Router();
 const Razorpay = require('razorpay');
+const UserModel = require("../model/UserModel");
 const razorpayInstance = new Razorpay({
     key_id: process.env.RAZORPAY_PUBLIC_KEY,
     key_secret: process.env.RAZORPAY_PRIVATE_KEY,
 });
-
-
 BookingRouter.post("/checkout",
     protectRouteMiddleWare,
     async function initialBookingController(req, res) {
@@ -49,11 +48,15 @@ BookingRouter.post("/checkout",
             const { price } = product;
             const bookingObject = {
                 priceAtThatTime: price,
-                userDetails: userId,
-                productDetails: productId,
+                user: userId,
+                product: productId,
                 status: "pending"
             }
             const booking = await BookingModel.create(bookingObject);
+            //  all also add reference of booking to the user
+            const user = await UserModel.findById(userId);
+            user.bookings.push(booking["_id"]);
+            await user.save();
             /****************
              * 3. order creation from razorpay
              *  * get the required deatils for order creation
@@ -78,13 +81,9 @@ BookingRouter.post("/checkout",
             await booking.save();
             res.status(200).json({
                 status: 'success',
-                message: orderObject
+                order: orderObject,
+                booking: booking
             });
-
-
-
-
-
         } catch (err) {
             console.log(err);
             res.status(500).json({
@@ -92,13 +91,52 @@ BookingRouter.post("/checkout",
             })
         }
     })
-BookingRouter.post("/verification", function paymentVerificationcontroller(req, res) {
+BookingRouter.post("/verification", async function paymentVerificationcontroller(req, res) {
+    try {
+        // on  payment gateway-> req.body + webhook -> hash
+        const razorPaySign = req.headers["x-razorpay-signature"];
+        // this object -> sha256+webhook_secret
+        const shasum = crypto.createHmac("sha256", process.env.WEBHOOK_SECRET);
+        // whatevere data is send by you razorpay
+        shasum.update(JSON.stringify(req.body));
+        const freshSignature = shasum.digest("hex");
+        console.log("verified payment");
+        if (freshSignature === razorPaySign) {
+            console.log("Payment is verified");
+            const orderId = req.body.payload.payment.entity.order_id;
+            const order = await BookingModel.findOne({ payment_order_id: orderId });
+            order.status = "success";
+            await order.save();
+            res.status(200).json({ message: "OK" });
+        } else {
+            // there some tempering 
+            res.status(403).json({ message: "Invalid" });
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
 
-})
-BookingRouter.get("/:userId", function orderPage() {
+    }
+}
+)
+BookingRouter.get("/", async function allBookings(req, res) {
+    try {
+        const bookings = await BookingModel.find()
+            .populate({path:"product",select:"name description category"})
+            .populate({ path: "user", select: "name email" })
+        res.status(200).json({
+            bookings: bookings,
+            status: "success"
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: err.message,
+            status: "failure"
 
+        });
+    }
 })
-BookingRouter.get("/", function allBookings() {
+BookingRouter.get("/orders", protectRouteMiddleWare, async function getAllorder() {
+
 
 })
 module.exports = BookingRouter;
