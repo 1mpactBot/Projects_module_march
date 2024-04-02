@@ -67,8 +67,10 @@ const getResourceByIdFactory = (model) => {
         try {
             const id = req.params.id
             const resource = await model.findById(id);
-
             if (resource) {
+                if(resource.password){
+                    resource.password = undefined;
+                }
                 res.status(200).json({
                     status: "successfull",
                     message: `got the resource `,

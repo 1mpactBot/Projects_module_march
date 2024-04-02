@@ -58,7 +58,6 @@ userSchema.pre("save", function (next) {
 // not send password to frontend 
 userSchema.pre("findOne", function (next) {
     // filter
-    this.select("-password");
     this.select("-__v");
     next();
 });
