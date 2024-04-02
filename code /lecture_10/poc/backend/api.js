@@ -19,6 +19,7 @@ app.get("/", (req, res) => {
 
     res.send("Hello World");
 });
+
 // bookings route
 app.post("/checkout", async (req, res) => {
     try {
@@ -62,7 +63,10 @@ app.post("/verify", async (req, res) => {
 
         if (freshSignature === razorPaySign) {
             console.log("Payment is verified");
-            console.log("order data",req.body)
+
+            const orderId = req.body.payload.payment.entity.order_id;
+            
+            console.log(orderId);
             res.status(200).json({ message: "OK" });
         } else {
             // there some tempering 

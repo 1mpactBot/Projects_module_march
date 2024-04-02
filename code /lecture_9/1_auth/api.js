@@ -72,6 +72,7 @@ const getAllUsers = async function (req, res) {
     }
 }
 
+
 const signupController = async function (req, res) {
     try {
         // 1. get the data from the client -> req.body
@@ -362,7 +363,7 @@ app.use(function cb(req, res) {
     })
 })
 // server -> run on a port 
-app.listen(LOCAL_PORT, function () {
+app.listen(3001, function () {
     console.log(` server is listening to port ${LOCAL_PORT}`);
 })
 
