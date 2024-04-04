@@ -1,5 +1,5 @@
 /***
- * a. Migration-> 
+ * a. Migration -> 
  *  * update, delete, create -> a list of documents 
  *  * it is seperate from your server
  *   
