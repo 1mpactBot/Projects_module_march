@@ -11,6 +11,7 @@
  * rules that an entity should follow
  * **/
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 /***
  * amazon
  * **/
@@ -55,8 +56,9 @@ const userSchemaRules = {
     },
 }
 const userSchema = new mongoose.Schema(userSchemaRules);
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
     this.confirmPassword = undefined;
+    this.password=await bcrypt.hash(this.password,10);
     next();
 })
 

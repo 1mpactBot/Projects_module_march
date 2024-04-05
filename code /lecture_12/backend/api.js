@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const rateLimit = require("express-rate-limit");
 // it adds all the enviornment variables to processe.env
 dotenv.config();
 const { DB_USER, DB_PASSWORD, LOCAL_PORT } = process.env;
@@ -15,10 +16,19 @@ mongoose.connect(dbURL)
     }).catch(err => { console.log(err) });
 //********************** */ 
 
-
 // create a server
 const app = express();
+/****
+ * 3 devices -> 
+ * dev-1 : 99 -> wifi
+ * dev-2 : 1 -> wifi
+ 
+ * **/ 
 // any request has something in it's body -> add it to req.body
+app.use(rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+}))
 app.use(express.json());
 app.use(cookieParser());
 const appRouter = express.Router();

@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
 // it adds all the enviornment variables to processe.env
 dotenv.config();
 const { DB_USER, DB_PASSWORD, LOCAL_PORT } = process.env;
@@ -19,6 +20,7 @@ mongoose.connect(dbURL)
 // create a server
 const app = express();
 // any request has something in it's body -> add it to req.body
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 const appRouter = express.Router();

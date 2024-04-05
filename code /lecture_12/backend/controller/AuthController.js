@@ -3,6 +3,7 @@ const UserModel = require("../model/UserModel");
 const { JWT_SECRET } = process.env;
 const jwt = require("jsonwebtoken");
 const promisify = require("util").promisify;
+const bcrypt = require("bcrypt");
 
 const promisifiedJWTSign = promisify(jwt.sign);
 const promisifiedJWTVerify = promisify(jwt.verify);
@@ -36,49 +37,48 @@ const signupController = async function (req, res) {
         })
     }
 }
-
 const loginController = async function (req, res) {
     try {
         let userDetails = req.body;
         const email = userDetails.email;
         const password = userDetails.password;
+
         if (email == undefined || password == undefined) {
             return res.status(401).json({
                 status: "failure",
                 message: "pleae enter email to login"
             })
         }
-
-        if (email) {
-            // it get's you the first matched entry
-            const user = await UserModel.findOne({ email: email });
-            if (user) {
-                // if user is found with that email
-                if (password == user.password) {
-                    //  for that user ->create the token
-                    const authToken = await promisifiedJWTSign({ id: user._id }, JWT_SECRET);
-                    // put that token in the cookie
-                    res.cookie("jwt", authToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
-                    res.status(200).json({
-                        message: "user logged in successfully",
-                        authToken: authToken,
-                    })
-
-                } else {
-                    // if password does not match
-                    res.status(401).json({
-                        status: "failure",
-                        message: "email or password is incorrect"
-                    })
-                }
-            } else {
-                // if email does not match for any user
-                res.status(401).json({
-                    status: "failure",
-                    message: "email or password is incorrect"
-                })
-            }
+       
+        // it get's you the first matched entry
+        const user = await UserModel.findOne({ email: email });
+        if (!user) {
+            // if password does not match
+            res.status(404).json({
+                status: "failure",
+                message: "user not found"
+            })
         }
+        const doesMatch = await bcrypt.compare(password, user.password);
+        if (doesMatch == false) {
+            // if password does not match
+            return res.status(401).json({
+                status: "failure",
+                message: "email or password is incorrect"
+            })
+        }
+        // if user is found with that email
+        //  for that user ->create the token
+        const authToken = await promisifiedJWTSign({ id: user._id }, JWT_SECRET);
+        // put that token in the cookie
+        res.cookie("jwt", authToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
+        res.status(200).json({
+            message: "user logged in successfully",
+            authToken: authToken,
+        })
+
+
+
         /****
          * 1. check if email is present or not
          *  2. -> if not present -> send a response to the user(email or password is incorrect)
@@ -97,7 +97,6 @@ const loginController = async function (req, res) {
         })
     }
 }
-
 const forgetPasswordController = async function (req, res) {
     try {
         /****

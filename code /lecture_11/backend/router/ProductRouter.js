@@ -9,7 +9,7 @@ const ProductRouter = express.Router();
 /****create product**/
 ProductRouter.route("/")
     .post(createProduct)
-    .get(isAdminMiddleWare,getAllProducts);
+    .get(getAllProducts);
 /*****get a product by it's ****/
 ProductRouter.route("/:id")
     .get(getproductById)
