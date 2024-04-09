@@ -23,8 +23,8 @@ function encryptPasswordHelper(Model) {
                 const allUser = await Model.find();
                 for (let i = 0; i < allUser.length; i++) {
                     let user = allUser[i];
-
                     user.password = await bcrypt.hash(user.password, 10);
+                    // validate before false 
                     await user.save({ validateBeforeSave: false });
                 }
                 // console.log("Alluser", allUser)

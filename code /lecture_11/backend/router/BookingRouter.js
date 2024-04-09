@@ -29,7 +29,7 @@ BookingRouter.post("/checkout",
             const { productId } = req.body;
             const userId = req.userId;
             if (!productId) {
-                return res.status(201).json({
+                return res.status(401).json({
                     message: "please provide productId"
                 })
             }

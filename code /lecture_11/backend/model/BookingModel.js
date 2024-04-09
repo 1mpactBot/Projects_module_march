@@ -41,7 +41,6 @@ const bookingSchemaRules = {
         required: true,
         ref: "ProductModel"
     },
-
     status: {
         type: String,
         enum: ["pending", "failed", "success"],
