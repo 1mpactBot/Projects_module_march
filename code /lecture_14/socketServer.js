@@ -10,8 +10,6 @@ const nodeServer = http.createServer(app);
 // socket server
 const socketServer = new socketTemplate(nodeServer);
 
-
-
 let room;
 socketServer.on('connection', (socket) => {
     // whenever a new connection is made -> it will console it 
@@ -49,12 +47,6 @@ socketServer.on('connection', (socket) => {
         socket.to(room).emit("serv_grp_message", message)
     })
 });
-
-
-
-
-
-
 
 // responds to http requests
 app.get("/", (req, res) => {
