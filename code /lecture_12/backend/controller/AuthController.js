@@ -174,7 +174,6 @@ const resetPasswordController = async function (req, res, next) {
         }
         // to avoid the collision
         const user = await UserModel.findById(req.params.id);
-
         if (user) {
             if (user.otp == resetDetails.otp) {
                 let currentTime = new Date();
